@@ -1971,7 +1971,7 @@ void main() {
     await tester.pumpWidget(buildTable(selected: true));
     expect(
       lastTableRowBoxDecoration().color,
-      themeData.colorScheme.primary.withOpacity(0.08),
+      themeData.colorScheme.primary.withValues(alpha: 0.08),
     );
   });
 
@@ -2302,5 +2302,60 @@ void main() {
     tableBorder = table.border;
     expect(tableBorder?.bottom.width, null);
     expect(tableBorder?.top.color, null);
+  });
+
+  testWidgets('DataColumn label can be centered', (WidgetTester tester) async {
+    const double horizontalMargin = 24.0;
+
+    Widget buildTable(
+        {MainAxisAlignment? headingRowAlignment, bool sortEnabled = false}) {
+      return MaterialApp(
+        home: Material(
+          child: DataTable2(
+            columns: <DataColumn>[
+              DataColumn(
+                headingRowAlignment: headingRowAlignment,
+                onSort:
+                    sortEnabled ? (int columnIndex, bool ascending) {} : null,
+                label: const Text('Header'),
+              ),
+            ],
+            rows: const <DataRow>[
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('Data')),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Test mainAxisAlignment without sort arrow.
+    await tester.pumpWidget(buildTable());
+
+    Offset headerTopLeft = tester.getTopLeft(find.text('Header'));
+    expect(headerTopLeft.dx, equals(horizontalMargin));
+
+    // Test mainAxisAlignment.center without sort arrow.
+    await tester
+        .pumpWidget(buildTable(headingRowAlignment: MainAxisAlignment.center));
+
+    Offset headerCenter = tester.getCenter(find.text('Header'));
+    expect(headerCenter.dx, equals(400));
+
+    // Test mainAxisAlignment with sort arrow.
+    await tester.pumpWidget(buildTable(sortEnabled: true));
+
+    headerTopLeft = tester.getTopLeft(find.text('Header'));
+    expect(headerTopLeft.dx, equals(horizontalMargin));
+
+    // Test mainAxisAlignment.center with sort arrow.
+    await tester.pumpWidget(buildTable(
+        headingRowAlignment: MainAxisAlignment.center, sortEnabled: true));
+
+    headerCenter = tester.getCenter(find.text('Header'));
+    expect(headerCenter.dx > 390, true);
   });
 }

@@ -293,7 +293,9 @@ abstract class AsyncDataTableSource extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     if (index - _firstRowAbsoluteIndex < 0 ||
-        index >= _rows.length + _firstRowAbsoluteIndex) return null;
+        index >= _rows.length + _firstRowAbsoluteIndex) {
+      return null;
+    }
     index -= _firstRowAbsoluteIndex;
     _fixSelectedState(index);
 
@@ -324,6 +326,7 @@ class AsyncPaginatedDataTable2 extends PaginatedDataTable2 {
     super.sortAscending = true,
     super.sortArrowAnimationDuration = const Duration(milliseconds: 150),
     super.sortArrowIcon = Icons.arrow_upward,
+    super.sortArrowIconColor,
     super.sortArrowAlwaysVisible,
     super.sortArrowBuilder,
     super.onSelectAll,
