@@ -96,9 +96,9 @@ class ResizeColumnsState extends State<ResizeColumns> {
       List<DataColumn> columns, DataColumn2 dc2, double delta) {
     var idx = columns.indexOf(dc2);
 
-    /// Force non fixed width columns to the left of the column beeing resized to fixed
+    /// Force non fixed width columns to the left of the column being resized to fixed
     if ((_cdc.getCurrentWidth(idx) + delta) >=
-        ColumnDataController.minColWidth) {
+        (dc2.minWidth ?? ColumnDataController.minColWidth)) {
       setState(() {
         for (int i = 0; i < idx; i++) {
           if (!_cdc.hasExtraWidth(i)) {

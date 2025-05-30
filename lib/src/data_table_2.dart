@@ -34,6 +34,7 @@ class DataColumn2 extends DataColumn {
       super.onSort,
       this.size = ColumnSize.M,
       this.fixedWidth,
+      this.minWidth,
       this.isResizable = false});
 
   /// Column sizes are determined based on available width by distributing it
@@ -44,6 +45,11 @@ class DataColumn2 extends DataColumn {
   /// Warning, if the width happens to be larger than available total width other
   /// columns can be clipped
   final double? fixedWidth;
+
+  /// Defines the minimum width of the column in pixels.
+  /// If not specified, [ColumnDataController.minColWidth] is used.
+  /// When the column is resizable, it cannot be resized smaller than this value.
+  final double? minWidth;
 
   /// If you want enable resizing for a given column, set this field to true
   final bool isResizable;
@@ -1365,8 +1371,13 @@ class DataTable2 extends DataTable {
       }
       columnDataController.colsWidthNoExtra[i] = widths[i];
       widths[i] += extraWidth;
-      if (widths[i] < ColumnDataController.minColWidth) {
-        widths[i] = ColumnDataController.minColWidth;
+      double minColWidth = ColumnDataController.minColWidth;
+      if ((columns[i] is DataColumn2 &&
+          (columns[i] as DataColumn2).minWidth != null)) {
+        minColWidth = (columns[i] as DataColumn2).minWidth!;
+      }
+      if (widths[i] < minColWidth) {
+        widths[i] = minColWidth;
         columnDataController.colsWidthNoExtra[i] = widths[i];
       }
     }
@@ -1776,9 +1787,9 @@ class SyncedScrollControllersState extends State<SyncedScrollControllers> {
       List<DataColumn> columns, DataColumn2 dc2, double delta) {
     var idx = columns.indexOf(dc2);
 
-    /// Force non fixed width columns to the left of the column beeing resized to fixed
+    /// Force non fixed width columns to the left of the column being resized to fixed
     if ((_cdc.getCurrentWidth(idx) + delta) >=
-        ColumnDataController.minColWidth) {
+        (dc2.minWidth ?? ColumnDataController.minColWidth)) {
       setState(() {
         for (int i = 0; i < idx; i++) {
           if (!_cdc.hasExtraWidth(i)) {
