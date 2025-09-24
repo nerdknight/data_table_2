@@ -1,12 +1,12 @@
 // ignore_for_file: avoid_print
 
+import 'package:data_table_2/data_table_2_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:data_table_2/data_table_2.dart';
 
+import '../custom_pager.dart';
 import '../data_sources.dart';
 import '../nav_helper.dart';
-import '../custom_pager.dart';
 
 // Copyright 2019 The Flutter team. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -34,8 +34,7 @@ class PaginatedDataTable2DemoState extends State<PaginatedDataTable2Demo> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_initialized) {
-      _dessertsDataSource = DessertDataSource(
-          context, getCurrentRouteOption(context) == defaultSorting);
+      _dessertsDataSource = DessertDataSource(context, getCurrentRouteOption(context) == defaultSorting);
 
       _controller = PaginatorController();
 
@@ -69,57 +68,49 @@ class PaginatedDataTable2DemoState extends State<PaginatedDataTable2Demo> {
       DataColumn2(
         label: const Text('Desert'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
-        onSort: (columnIndex, ascending) =>
-            sort<String>((d) => d.name, columnIndex, ascending),
+        onSort: (columnIndex, ascending) => sort<String>((d) => d.name, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Calories'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) =>
-            sort<num>((d) => d.calories, columnIndex, ascending),
+        onSort: (columnIndex, ascending) => sort<num>((d) => d.calories, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Fat (gm)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) =>
-            sort<num>((d) => d.fat, columnIndex, ascending),
+        onSort: (columnIndex, ascending) => sort<num>((d) => d.fat, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Carbs (gm)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) =>
-            sort<num>((d) => d.carbs, columnIndex, ascending),
+        onSort: (columnIndex, ascending) => sort<num>((d) => d.carbs, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Protein (gm)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) =>
-            sort<num>((d) => d.protein, columnIndex, ascending),
+        onSort: (columnIndex, ascending) => sort<num>((d) => d.protein, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Sodium (mg)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) =>
-            sort<num>((d) => d.sodium, columnIndex, ascending),
+        onSort: (columnIndex, ascending) => sort<num>((d) => d.sodium, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Calcium (%)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) =>
-            sort<num>((d) => d.calcium, columnIndex, ascending),
+        onSort: (columnIndex, ascending) => sort<num>((d) => d.calcium, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Iron (%)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) =>
-            sort<num>((d) => d.iron, columnIndex, ascending),
+        onSort: (columnIndex, ascending) => sort<num>((d) => d.iron, columnIndex, ascending),
       ),
     ];
   }
@@ -135,23 +126,15 @@ class PaginatedDataTable2DemoState extends State<PaginatedDataTable2Demo> {
         columnSpacing: 0,
         wrapInCard: false,
         renderEmptyRowsInTheEnd: false,
-        headingRowColor:
-            WidgetStateColor.resolveWith((states) => Colors.grey[200]!),
-        header:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        headingRowColor: WidgetStateColor.resolveWith((states) => Colors.grey[200]!),
+        header: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           const Text('PaginatedDataTable2'),
           if (kDebugMode && getCurrentRouteOption(context) == custPager)
             Row(children: [
-              OutlinedButton(
-                  onPressed: () => _controller!.goToPageWithRow(25),
-                  child: const Text('Go to row 25')),
-              OutlinedButton(
-                  onPressed: () => _controller!.goToRow(5),
-                  child: const Text('Go to row 5'))
+              OutlinedButton(onPressed: () => _controller!.goToPageWithRow(25), child: const Text('Go to row 25')),
+              OutlinedButton(onPressed: () => _controller!.goToRow(5), child: const Text('Go to row 5'))
             ]),
-          if (getCurrentRouteOption(context) == custPager &&
-              _controller != null)
-            PageNumber(controller: _controller!)
+          if (getCurrentRouteOption(context) == custPager && _controller != null) PageNumber(controller: _controller!)
         ]),
         rowsPerPage: _rowsPerPage,
         autoRowsToHeight: getCurrentRouteOption(context) == autoRows,
@@ -179,29 +162,20 @@ class PaginatedDataTable2DemoState extends State<PaginatedDataTable2Demo> {
         sortColumnIndex: _sortColumnIndex,
         sortAscending: _sortAscending,
         sortArrowIcon: Icons.keyboard_arrow_up, // custom arrow
-        sortArrowAnimationDuration:
-            const Duration(milliseconds: 0), // custom animation duration
+        sortArrowAnimationDuration: const Duration(milliseconds: 0), // custom animation duration
         onSelectAll: _dessertsDataSource.selectAll,
-        controller:
-            getCurrentRouteOption(context) == custPager ? _controller : null,
+        controller: getCurrentRouteOption(context) == custPager ? _controller : null,
         hidePaginator: getCurrentRouteOption(context) == custPager,
         columns: _columns,
-        empty: Center(
-            child: Container(
-                padding: const EdgeInsets.all(20),
-                color: Colors.grey[200],
-                child: const Text('No data'))),
-        source: getCurrentRouteOption(context) == noData
-            ? DessertDataSource.empty(context)
-            : _dessertsDataSource,
+        empty: Center(child: Container(padding: const EdgeInsets.all(20), color: Colors.grey[200], child: const Text('No data'))),
+        source: getCurrentRouteOption(context) == noData ? DessertDataSource.empty(context) : _dessertsDataSource,
         columnResizingParameters: ColumnResizingParameters(
           desktopMode: true,
           realTime: true,
           widgetColor: Theme.of(context).primaryColor,
         ),
       ),
-      if (getCurrentRouteOption(context) == custPager)
-        Positioned(bottom: 16, child: CustomPager(_controller!))
+      if (getCurrentRouteOption(context) == custPager) Positioned(bottom: 16, child: CustomPager(_controller!))
     ]);
   }
 }

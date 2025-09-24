@@ -58,12 +58,12 @@ Please check the [example folder](https://github.com/maxim-saplin/data_table_2/t
 
 2. Import:
 ```dart
-import 'package:data_table_2/data_table_2.dart';
+import 'package:data_table_2/data_table_2_plus.dart';
 ```
 
 3. Code:
 ```dart
-import 'package:data_table_2/data_table_2.dart';
+import 'package:data_table_2/data_table_2_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 

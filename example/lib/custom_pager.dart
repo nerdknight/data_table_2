@@ -1,4 +1,4 @@
-import 'package:data_table_2/data_table_2.dart';
+import 'package:data_table_2/data_table_2_plus.dart';
 import 'package:flutter/material.dart';
 
 class PageNumber extends StatefulWidget {
@@ -85,24 +85,16 @@ class CustomPagerState extends State<CustomPager> {
         ],
       ),
       child: Theme(
-          data: Theme.of(context).copyWith(
-              iconTheme: const IconThemeData(color: Colors.white),
-              textTheme:
-                  const TextTheme(titleMedium: TextStyle(color: Colors.white))),
+          data: Theme.of(context)
+              .copyWith(iconTheme: const IconThemeData(color: Colors.white), textTheme: const TextTheme(titleMedium: TextStyle(color: Colors.white))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                  onPressed: () => widget.controller.goToFirstPage(),
-                  icon: const Icon(Icons.skip_previous)),
-              IconButton(
-                  onPressed: () => widget.controller.goToPreviousPage(),
-                  icon: const Icon(Icons.chevron_left_sharp)),
+              IconButton(onPressed: () => widget.controller.goToFirstPage(), icon: const Icon(Icons.skip_previous)),
+              IconButton(onPressed: () => widget.controller.goToPreviousPage(), icon: const Icon(Icons.chevron_left_sharp)),
               DropdownButton<int>(
                   onChanged: (v) => widget.controller.setRowsPerPage(v!),
-                  value: _availableSizes.contains(widget.controller.rowsPerPage)
-                      ? widget.controller.rowsPerPage
-                      : _availableSizes[0],
+                  value: _availableSizes.contains(widget.controller.rowsPerPage) ? widget.controller.rowsPerPage : _availableSizes[0],
                   dropdownColor: Colors.grey[800],
                   items: _availableSizes
                       .map((s) => DropdownMenuItem<int>(
@@ -110,12 +102,8 @@ class CustomPagerState extends State<CustomPager> {
                             child: Text(s.toString()),
                           ))
                       .toList()),
-              IconButton(
-                  onPressed: () => widget.controller.goToNextPage(),
-                  icon: const Icon(Icons.chevron_right_sharp)),
-              IconButton(
-                  onPressed: () => widget.controller.goToLastPage(),
-                  icon: const Icon(Icons.skip_next))
+              IconButton(onPressed: () => widget.controller.goToNextPage(), icon: const Icon(Icons.chevron_right_sharp)),
+              IconButton(onPressed: () => widget.controller.goToLastPage(), icon: const Icon(Icons.skip_next))
             ],
           )),
     );

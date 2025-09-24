@@ -2,6 +2,7 @@ import 'package:example/screens/data_table2_fixed_nm.dart';
 import 'package:example/screens/data_table2_resizeable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'nav_helper.dart';
 import 'screens/async_paginated_data_table2.dart';
@@ -13,20 +14,18 @@ import 'screens/data_table2_simple.dart';
 import 'screens/data_table2_tests.dart';
 import 'screens/paginated_data_table.dart';
 import 'screens/paginated_data_table2.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MyApp());
   // Add import
-  // import 'package:data_table_2/data_table_2.dart';
+  // import 'package:data_table_2/data_table_2_plus.dart';
   // and uncomment below line to remove widgets' logs
   //dataTableShowLogs = false;
 }
 
 const String initialRoute = '/datatable2';
 
-Scaffold _getScaffold(BuildContext context, Widget body,
-    [List<String>? options]) {
+Scaffold _getScaffold(BuildContext context, Widget body, [List<String>? options]) {
   var defaultOption = getCurrentRouteOption(context);
   if (defaultOption.isEmpty && options != null && options.isNotEmpty) {
     defaultOption = options[0];
@@ -44,10 +43,7 @@ Scaffold _getScaffold(BuildContext context, Widget body,
             child: DropdownButton<String>(
               icon: const Icon(Icons.arrow_forward),
               dropdownColor: Colors.grey[800],
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
               value: _getCurrentRoute(context),
               onChanged: (v) {
                 Navigator.of(context).pushNamed(v!);
@@ -105,21 +101,17 @@ Scaffold _getScaffold(BuildContext context, Widget body,
                         child: DropdownButton<String>(
                             icon: const SizedBox(),
                             dropdownColor: Colors.grey[300],
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(color: Colors.black),
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.black),
                             value: defaultOption,
                             onChanged: (v) {
                               var r = _getCurrentRoute(context);
                               Navigator.of(context).pushNamed(r, arguments: v);
                             },
                             items: options
-                                .map<DropdownMenuItem<String>>(
-                                    (v) => DropdownMenuItem<String>(
-                                          value: v,
-                                          child: Text(v),
-                                        ))
+                                .map<DropdownMenuItem<String>>((v) => DropdownMenuItem<String>(
+                                      value: v,
+                                      child: Text(v),
+                                    ))
                                 .toList()))))
             : const SizedBox()
       ]),
@@ -129,10 +121,7 @@ Scaffold _getScaffold(BuildContext context, Widget body,
 }
 
 String _getCurrentRoute(BuildContext context) {
-  return ModalRoute.of(context) != null &&
-          ModalRoute.of(context)!.settings.name != null
-      ? ModalRoute.of(context)!.settings.name!
-      : initialRoute;
+  return ModalRoute.of(context) != null && ModalRoute.of(context)!.settings.name != null ? ModalRoute.of(context)!.settings.name! : initialRoute;
 }
 
 // ignore: use_key_in_widget_constructors
@@ -151,35 +140,17 @@ class MyApp extends StatelessWidget {
         '/datatable2': (context) {
           final currentRouteOption = getCurrentRouteOption(context);
           return _getScaffold(
-              context,
-              currentRouteOption == rounded
-                  ? const DataTable2RoundedDemo()
-                  : const DataTable2Demo(),
-              getOptionsForRoute('/datatable2'));
+              context, currentRouteOption == rounded ? const DataTable2RoundedDemo() : const DataTable2Demo(), getOptionsForRoute('/datatable2'));
         },
-        '/datatable2simple': (context) =>
-            _getScaffold(context, const DataTable2SimpleDemo()),
-        '/datatable2scrollup': (context) =>
-            _getScaffold(context, const DataTable2ScrollupDemo()),
-        '/datatable2fixedmn': (context) => _getScaffold(
-            context,
-            const DataTable2FixedNMDemo(),
-            getOptionsForRoute('/datatable2fixedmn')),
-        '/paginated2': (context) => _getScaffold(context,
-            const PaginatedDataTable2Demo(), getOptionsForRoute('/paginated2')),
-        '/asyncpaginated2': (context) => _getScaffold(
-            context,
-            const AsyncPaginatedDataTable2Demo(),
-            getOptionsForRoute('/asyncpaginated2')),
+        '/datatable2simple': (context) => _getScaffold(context, const DataTable2SimpleDemo()),
+        '/datatable2scrollup': (context) => _getScaffold(context, const DataTable2ScrollupDemo()),
+        '/datatable2fixedmn': (context) => _getScaffold(context, const DataTable2FixedNMDemo(), getOptionsForRoute('/datatable2fixedmn')),
+        '/paginated2': (context) => _getScaffold(context, const PaginatedDataTable2Demo(), getOptionsForRoute('/paginated2')),
+        '/asyncpaginated2': (context) => _getScaffold(context, const AsyncPaginatedDataTable2Demo(), getOptionsForRoute('/asyncpaginated2')),
         '/datatable': (context) => _getScaffold(context, const DataTableDemo()),
-        '/paginated': (context) =>
-            _getScaffold(context, const PaginatedDataTableDemo()),
-        '/datatable2tests': (context) =>
-            _getScaffold(context, const DataTable2Tests()),
-        '/datatable2resize': (context) => _getScaffold(
-            context,
-            const ResizeableDataTable2Demo(),
-            getOptionsForRoute('/datatable2resize')),
+        '/paginated': (context) => _getScaffold(context, const PaginatedDataTableDemo()),
+        '/datatable2tests': (context) => _getScaffold(context, const DataTable2Tests()),
+        '/datatable2resize': (context) => _getScaffold(context, const ResizeableDataTable2Demo(), getOptionsForRoute('/datatable2resize')),
       },
       localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
       supportedLocales: const [

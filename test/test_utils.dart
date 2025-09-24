@@ -6,12 +6,11 @@
 
 // ignore_for_file: avoid_print
 
-import 'package:data_table_2/data_table_2.dart';
+import 'package:data_table_2_plus/data_table_2_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Future wrapWidgetSetSurf(WidgetTester tester, Widget widget,
-    [Size? size]) async {
+Future wrapWidgetSetSurf(WidgetTester tester, Widget widget, [Size? size]) async {
   await tester.binding.setSurfaceSize(size ?? const Size(1000, 200));
 
   // tester.binding.window.physicalSizeTestValue = size != null
@@ -23,8 +22,7 @@ Future wrapWidgetSetSurf(WidgetTester tester, Widget widget,
   return tester.pumpWidget(MaterialApp(home: Material(child: widget)));
 }
 
-Future wrapWidgetSetSurfAndWait(WidgetTester tester, Widget widget,
-    [Size? size]) async {
+Future wrapWidgetSetSurfAndWait(WidgetTester tester, Widget widget, [Size? size]) async {
   await tester.binding.setSurfaceSize(size ?? const Size(1000, 200));
 
   // tester.binding.window.physicalSizeTestValue = size != null
@@ -37,8 +35,7 @@ Future wrapWidgetSetSurfAndWait(WidgetTester tester, Widget widget,
   return tester.pumpAndSettle(const Duration(minutes: 1));
 }
 
-Finder findFirstContainerFor(String text) =>
-    find.widgetWithText(Container, text).first;
+Finder findFirstContainerFor(String text) => find.widgetWithText(Container, text).first;
 
 class Tripple<T> {
   Tripple(this.v1, this.v2, this.v3);
@@ -50,8 +47,7 @@ class Tripple<T> {
 int _idCounter = 0;
 
 class Dessert {
-  Dessert(this.name, this.calories, this.fat, this.carbs, this.protein,
-      this.sodium, this.calcium, this.iron);
+  Dessert(this.name, this.calories, this.fat, this.carbs, this.protein, this.sodium, this.calcium, this.iron);
 
   final String name;
   final int calories;
@@ -80,10 +76,7 @@ final List<Dessert> kDesserts = <Dessert>[
 ];
 
 final testColumns = <DataColumn2>[
-  DataColumn2(
-      label: const Text('Name'),
-      tooltip: 'Name',
-      onSort: (int columnIndex, bool ascending) {}),
+  DataColumn2(label: const Text('Name'), tooltip: 'Name', onSort: (int columnIndex, bool ascending) {}),
   DataColumn2(
     label: const Text('Calories'),
     tooltip: 'Calories',
@@ -174,8 +167,7 @@ DataTable2 buildTable(
     headingRowColor: WidgetStatePropertyAll(headingRowColor),
     headingRowDecoration: headingRowDecoration,
     showHeadingCheckBox: showHeadingCheckbox,
-    sortArrowAnimationDuration:
-        sortArrowAnimationDuration ?? const Duration(milliseconds: 150),
+    sortArrowAnimationDuration: sortArrowAnimationDuration ?? const Duration(milliseconds: 150),
     minWidth: minWidth,
     fixedTopRows: fixedTopRows,
     fixedLeftColumns: fixedLeftColumns,
@@ -198,11 +190,7 @@ DataTable2 buildTable(
 }
 
 class TestDataSource extends DataTableSource {
-  TestDataSource(
-      {this.allowSelection = false,
-      this.showPage = true,
-      this.showGeneration = true,
-      this.noData = false});
+  TestDataSource({this.allowSelection = false, this.showPage = true, this.showGeneration = true, this.noData = false});
 
   final bool allowSelection;
   final bool showPage;
@@ -240,9 +228,7 @@ class TestDataSource extends DataTableSource {
         DataCell(Text('${dessert.calories}')),
         DataCell(Text(showGeneration ? '$generation' : '${dessert.carbs}')),
       ],
-      onSelectChanged: allowSelection
-          ? (bool? selected) => _handleSelected(index, selected)
-          : null,
+      onSelectChanged: allowSelection ? (bool? selected) => _handleSelected(index, selected) : null,
     );
   }
 
@@ -294,8 +280,7 @@ PaginatedDataTable2 buildPaginatedTable(
     sortColumnIndex: sortColumnIndex,
     sortAscending: sortAscending,
     sortArrowIcon: sortArrowIcon ?? Icons.arrow_upward,
-    sortArrowAnimationDuration:
-        sortArrowAnimationDuration ?? const Duration(milliseconds: 150),
+    sortArrowAnimationDuration: sortArrowAnimationDuration ?? const Duration(milliseconds: 150),
     onSelectAll: (bool? value) {},
     columns: columns ?? testColumns,
     showFirstLastButtons: true,
@@ -316,14 +301,8 @@ PaginatedDataTable2 buildPaginatedTable(
     smRatio: overrideSizes ? 0.5 : 0.67,
     lmRatio: overrideSizes ? 1.5 : 1.2,
     autoRowsToHeight: autoRowsToHeight,
-    onRowsPerPageChanged: showPageSizeSelector || onRowsPerPageChanged != null
-        ? onRowsPerPageChanged ?? (int? rowsPerPage) {}
-        : null,
-    source: TestDataSource(
-        allowSelection: true,
-        showPage: showPage,
-        showGeneration: showGeneration,
-        noData: noData),
+    onRowsPerPageChanged: showPageSizeSelector || onRowsPerPageChanged != null ? onRowsPerPageChanged ?? (int? rowsPerPage) {} : null,
+    source: TestDataSource(allowSelection: true, showPage: showPage, showGeneration: showGeneration, noData: noData),
   );
 }
 
@@ -380,8 +359,7 @@ PaginatedDataTable2 buildAsyncPaginatedTable(
     sortColumnIndex: sortColumnIndex,
     sortAscending: sortAscending,
     sortArrowIcon: sortArrowIcon ?? Icons.arrow_upward,
-    sortArrowAnimationDuration:
-        sortArrowAnimationDuration ?? const Duration(milliseconds: 150),
+    sortArrowAnimationDuration: sortArrowAnimationDuration ?? const Duration(milliseconds: 150),
     onSelectAll: onSelectAll ?? (bool? value) {},
     columns: columns ?? testColumns,
     showFirstLastButtons: true,
@@ -406,17 +384,11 @@ PaginatedDataTable2 buildAsyncPaginatedTable(
     lmRatio: overrideSizes ? 1.5 : 1.2,
     autoRowsToHeight: autoRowsToHeight,
     errorBuilder: (e) => Text(e.toString()),
-    onRowsPerPageChanged: showPageSizeSelector || onRowsPerPageChanged != null
-        ? onRowsPerPageChanged ?? (int? rowsPerPage) {}
-        : null,
+    onRowsPerPageChanged: showPageSizeSelector || onRowsPerPageChanged != null ? onRowsPerPageChanged ?? (int? rowsPerPage) {} : null,
     pageSyncApproach: syncApproach,
     source: source ??
         (DessertDataSourceAsync(
-            allowSelection: true,
-            showPage: showPage,
-            useKDeserts: useKDeserts,
-            noData: noData,
-            fewerResultsAfterRefresh: fewerResultsAfterRefresh)
+            allowSelection: true, showPage: showPage, useKDeserts: useKDeserts, noData: noData, fewerResultsAfterRefresh: fewerResultsAfterRefresh)
           .._errorCounter = throwError ? 0 : null),
   );
 }
@@ -461,8 +433,7 @@ class DessertDataSourceAsync extends AsyncDataTableSource {
   }
 
   Future<int> getTotalRecors() {
-    return Future<int>.delayed(
-        const Duration(milliseconds: 0), () => _empty ? 0 : _dessertsX3.length);
+    return Future<int>.delayed(const Duration(milliseconds: 0), () => _empty ? 0 : _dessertsX3.length);
   }
 
   @override
@@ -481,15 +452,10 @@ class DessertDataSourceAsync extends AsyncDataTableSource {
     assert(index >= 0);
 
     var x = _empty
-        ? await Future.delayed(const Duration(milliseconds: 2000),
-            () => DesertsFakeWebServiceResponse(0, []))
+        ? await Future.delayed(const Duration(milliseconds: 2000), () => DesertsFakeWebServiceResponse(0, []))
         : (_usefewerResultsAfterRefresh)
-            ? await Future.delayed(
-                const Duration(milliseconds: 2000),
-                () => DesertsFakeWebServiceResponse(
-                    10, _dessertsX3.take(10).toList()))
-            : await _repo.getData(startIndex, count, _sortColumn,
-                _sortAscending, noData, useKDeserts);
+            ? await Future.delayed(const Duration(milliseconds: 2000), () => DesertsFakeWebServiceResponse(10, _dessertsX3.take(10).toList()))
+            : await _repo.getData(startIndex, count, _sortColumn, _sortAscending, noData, useKDeserts);
 
     if (fewerResultsAfterRefresh && !_usefewerResultsAfterRefresh) {
       _usefewerResultsAfterRefresh = true;
@@ -539,8 +505,7 @@ class DesertsFakeWebServiceResponse {
 }
 
 class DesertsFakeWebService {
-  int Function(Dessert, Dessert)? _getComparisonFunction(
-      String column, bool ascending) {
+  int Function(Dessert, Dessert)? _getComparisonFunction(String column, bool ascending) {
     var coef = ascending ? 1 : -1;
     switch (column) {
       case 'name':
@@ -552,8 +517,7 @@ class DesertsFakeWebService {
       case 'carbs':
         return (Dessert d1, Dessert d2) => coef * (d1.carbs - d2.carbs);
       case 'protein':
-        return (Dessert d1, Dessert d2) =>
-            coef * (d1.protein - d2.protein).round();
+        return (Dessert d1, Dessert d2) => coef * (d1.protein - d2.protein).round();
       case 'sodium':
         return (Dessert d1, Dessert d2) => coef * (d1.sodium - d2.sodium);
       case 'calcium':
@@ -565,9 +529,7 @@ class DesertsFakeWebService {
     return null;
   }
 
-  Future<DesertsFakeWebServiceResponse> getData(
-      int startingAt, int count, String sortedBy, bool sortedAsc, bool noData,
-      [bool useKDesserts = false]) async {
+  Future<DesertsFakeWebServiceResponse> getData(int startingAt, int count, String sortedBy, bool sortedAsc, bool noData, [bool useKDesserts = false]) async {
     return Future.delayed(
         Duration(
             milliseconds: startingAt == 0
@@ -579,14 +541,8 @@ class DesertsFakeWebService {
       return noData
           ? DesertsFakeWebServiceResponse(0, [])
           : (useKDesserts
-              ? DesertsFakeWebServiceResponse(
-                  50 * kDesserts.length,
-                  List.generate(
-                      count,
-                      (index) =>
-                          kDesserts[(startingAt + index) % kDesserts.length]))
-              : DesertsFakeWebServiceResponse(_dessertsX3.length,
-                  _dessertsX3.skip(startingAt).take(count).toList()));
+              ? DesertsFakeWebServiceResponse(50 * kDesserts.length, List.generate(count, (index) => kDesserts[(startingAt + index) % kDesserts.length]))
+              : DesertsFakeWebServiceResponse(_dessertsX3.length, _dessertsX3.skip(startingAt).take(count).toList()));
     });
   }
 }
@@ -594,10 +550,8 @@ class DesertsFakeWebService {
 List<Dessert> _desserts = kDesserts;
 
 List<Dessert> _dessertsX3 = _desserts.toList()
-  ..addAll(_desserts.map((i) => Dessert('${i.name} x2', i.calories, i.fat,
-      i.carbs, i.protein, i.sodium, i.calcium, i.iron)))
-  ..addAll(_desserts.map((i) => Dessert('${i.name} x3', i.calories, i.fat,
-      i.carbs, i.protein, i.sodium, i.calcium, i.iron)));
+  ..addAll(_desserts.map((i) => Dessert('${i.name} x2', i.calories, i.fat, i.carbs, i.protein, i.sodium, i.calcium, i.iron)))
+  ..addAll(_desserts.map((i) => Dessert('${i.name} x3', i.calories, i.fat, i.carbs, i.protein, i.sodium, i.calcium, i.iron)));
 
 class WidgetChildTypeFinder extends ChainedFinder {
   WidgetChildTypeFinder(super.parent, this.childType);
@@ -635,13 +589,10 @@ class WidgetChildTextFinder extends ChainedFinder {
     for (final Element candidate in parentCandidates) {
       var elements = collectAllElementsFrom(candidate, skipOffstage: false);
       for (var e in elements) {
-        if ((e.widget.runtimeType == Text &&
-                (e.widget as Text).data!.contains(childTextIncludes!)) ||
+        if ((e.widget.runtimeType == Text && (e.widget as Text).data!.contains(childTextIncludes!)) ||
             ((e.widget.runtimeType == SelectableText &&
                 (e.widget as SelectableText).data != null &&
-                (e.widget as SelectableText)
-                    .data!
-                    .contains(childTextIncludes!)))) {
+                (e.widget as SelectableText).data!.contains(childTextIncludes!)))) {
           yield e;
         }
       }
@@ -683,8 +634,7 @@ class WidgetChildSemanticsFinder extends ChainedFinder {
     for (final Element candidate in parentCandidates) {
       var elements = collectAllElementsFrom(candidate, skipOffstage: false);
       for (var e in elements) {
-        if (e.widget is Semantics &&
-            (e.widget as Semantics).properties.tooltip == tooltip) {
+        if (e.widget is Semantics && (e.widget as Semantics).properties.tooltip == tooltip) {
           yield e;
         }
       }
@@ -694,10 +644,7 @@ class WidgetChildSemanticsFinder extends ChainedFinder {
 
 extension ExtraFinders on Finder {
   Finder byChildType(Type childType) => WidgetChildTypeFinder(this, childType);
-  Finder byChildTextIncludes(String? childTextIncludes) =>
-      WidgetChildTextFinder(this, childTextIncludes);
-  Finder byChildIcon(IconData iconData) =>
-      WidgetChildIconFinder(this, iconData);
-  Finder byChildSemantics(String tooltip) =>
-      WidgetChildSemanticsFinder(this, tooltip);
+  Finder byChildTextIncludes(String? childTextIncludes) => WidgetChildTextFinder(this, childTextIncludes);
+  Finder byChildIcon(IconData iconData) => WidgetChildIconFinder(this, iconData);
+  Finder byChildSemantics(String tooltip) => WidgetChildSemanticsFinder(this, tooltip);
 }
