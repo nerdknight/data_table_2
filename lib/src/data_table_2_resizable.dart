@@ -26,15 +26,8 @@ class DataTableController extends StatelessWidget {
 
   /// Positions of 2 pairs of scroll controllers (sc11|sc12 and sc21|sc22)
   /// will be synchronized, attached scrollables will copy the positions
-  final Widget Function(
-      BuildContext context,
-      ScrollController sc11,
-      ScrollController sc12,
-      ScrollController sc21,
-      ScrollController sc22,
-      ColumnDataController dataController,
-      Function(List<DataColumn> columns, DataColumn2 dc2, double delta)
-          onColumnResized) builder;
+  final Widget Function(BuildContext context, ScrollController sc11, ScrollController sc12, ScrollController sc21, ScrollController sc22,
+      ColumnDataController dataController, Function(List<DataColumn> columns, DataColumn2 dc2, double delta) onColumnResized) builder;
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +36,8 @@ class DataTableController extends StatelessWidget {
       sc12toSc11Position: sc12toSc11Position,
       horizontalScrollController: horizontalScrollController,
       sc22toSc21Position: sc22toSc21Position,
-      builder:
-          (context, sc11, sc12, sc21, sc22, dataController, onColumnResized) =>
-              ResizeColumns(
-        builder: (context, dataController, onColumnResized) => builder(
-            context, sc11, sc12, sc21, sc22, dataController, onColumnResized),
+      builder: (context, sc11, sc12, sc21, sc22) => ResizeColumns(
+        builder: (context, dataController, onColumnResized) => builder(context, sc11, sc12, sc21, sc22, dataController, onColumnResized),
       ),
     );
   }
@@ -61,10 +51,7 @@ class ResizeColumns extends StatefulWidget {
   });
 
   final Widget Function(
-      BuildContext context,
-      ColumnDataController dataController,
-      Function(List<DataColumn> columns, DataColumn2 dc2, double delta)
-          onColumnResized) builder;
+      BuildContext context, ColumnDataController dataController, Function(List<DataColumn> columns, DataColumn2 dc2, double delta) onColumnResized) builder;
 
   @override
   ResizeColumnsState createState() => ResizeColumnsState();
@@ -92,13 +79,11 @@ class ResizeColumnsState extends State<ResizeColumns> {
     _cdc.dispose();
   }
 
-  void _onColumnResized(
-      List<DataColumn> columns, DataColumn2 dc2, double delta) {
+  void _onColumnResized(List<DataColumn> columns, DataColumn2 dc2, double delta) {
     var idx = columns.indexOf(dc2);
 
     /// Force non fixed width columns to the left of the column being resized to fixed
-    if ((_cdc.getCurrentWidth(idx) + delta) >=
-        (dc2.minWidth ?? ColumnDataController.minColWidth)) {
+    if ((_cdc.getCurrentWidth(idx) + delta) >= (dc2.minWidth ?? ColumnDataController.minColWidth)) {
       setState(() {
         for (int i = 0; i < idx; i++) {
           if (!_cdc.hasExtraWidth(i)) {
@@ -111,8 +96,7 @@ class ResizeColumnsState extends State<ResizeColumns> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      widget.builder(context, _cdc, _onColumnResized);
+  Widget build(BuildContext context) => widget.builder(context, _cdc, _onColumnResized);
 }
 
 /// Controller to store and calculate columns resizing
@@ -141,8 +125,7 @@ class ColumnDataController extends ChangeNotifier {
   }
 
   bool isFixedWidth(DataColumn dc, int colIdx) {
-    return dc is! DataColumn2 ||
-        (dc.fixedWidth != null || getExtraWidth(colIdx) != 0);
+    return dc is! DataColumn2 || (dc.fixedWidth != null || getExtraWidth(colIdx) != 0);
   }
 }
 

@@ -1429,8 +1429,7 @@ class SyncedScrollControllers extends StatefulWidget {
 
   /// Positions of 2 pairs of scroll controllers (sc11|sc12 and sc21|sc22)
   /// will be synchronized, attached scrollables will copy the positions
-  final Widget Function(BuildContext context, ScrollController sc11, ScrollController sc12, ScrollController sc21, ScrollController sc22,
-      ColumnDataController dataController, Function(List<DataColumn> columns, DataColumn2 dc2, double delta) onColumnResized) builder;
+  final Widget Function(BuildContext context, ScrollController sc11, ScrollController sc12, ScrollController sc21, ScrollController sc22) builder;
 
   @override
   SyncedScrollControllersState createState() => SyncedScrollControllersState();
@@ -1441,7 +1440,6 @@ class SyncedScrollControllersState extends State<SyncedScrollControllers> {
   late ScrollController _sc12;
   ScrollController? _sc21;
   late ScrollController _sc22;
-  late ColumnDataController _cdc;
 
   final List<void Function()> _listeners = [];
 
@@ -1491,7 +1489,6 @@ class SyncedScrollControllersState extends State<SyncedScrollControllers> {
 
     _syncScrollControllers(_sc11!, _sc12);
     _syncScrollControllers(_sc21!, _sc22);
-    _cdc = ColumnDataController();
   }
 
   void _disposeOrUnsubscribe() {
@@ -1510,23 +1507,6 @@ class SyncedScrollControllersState extends State<SyncedScrollControllers> {
     _sc22.dispose();
 
     _listeners.clear();
-    _cdc.dispose();
-  }
-
-  void _onColumnResized(List<DataColumn> columns, DataColumn2 dc2, double delta) {
-    var idx = columns.indexOf(dc2);
-
-    /// Force non fixed width columns to the left of the column being resized to fixed
-    if ((_cdc.getCurrentWidth(idx) + delta) >= (dc2.minWidth ?? ColumnDataController.minColWidth)) {
-      setState(() {
-        for (int i = 0; i < idx; i++) {
-          if (!_cdc.hasExtraWidth(i)) {
-            _cdc.updateDataColumn(i, 0);
-          }
-        }
-        _cdc.updateDataColumn(idx, delta);
-      });
-    }
   }
 
   final Map<ScrollController, bool> _doNotReissueJump = {};
@@ -1553,5 +1533,5 @@ class SyncedScrollControllersState extends State<SyncedScrollControllers> {
   }
 
   @override
-  Widget build(BuildContext context) => widget.builder(context, _sc11!, _sc12, _sc21!, _sc22, _cdc, _onColumnResized);
+  Widget build(BuildContext context) => widget.builder(context, _sc11!, _sc12, _sc21!, _sc22);
 }
