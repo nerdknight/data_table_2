@@ -150,6 +150,13 @@ class DataRow2 extends DataRow {
 // final GestureLongPressCallback? onLongPress;
 }
 
+/// Information about the state of DataTable during build, for the moment the current calculated column width
+class StateInfo {
+  final List<double> actualColumnWidths;
+
+  const StateInfo({required this.actualColumnWidths});
+}
+
 /// In-place replacement of standard [DataTable] widget, mimics it API.
 /// Has the header row always fixed and core of the table (with data rows)
 /// scrollable and stretching to max width/height of it's container.
@@ -201,6 +208,7 @@ class DataTable2 extends DataTable {
     this.sortArrowIconColor,
     this.sortArrowBuilder,
     this.headingRowDecoration,
+    this.stackedWidgets,
     required super.rows,
   })  : assert(fixedLeftColumns >= 0),
         assert(fixedTopRows >= 0);
@@ -358,6 +366,9 @@ class DataTable2 extends DataTable {
   /// this color is static and doesn't repond to state change
   /// Note: to change background color of fixed data rows use [DataTable2.headingRowColor]
   final Color? fixedCornerColor;
+
+  /// Construct a list of widget to render stacked on top of main table
+  final List<Widget> Function(StateInfo)? stackedWidgets;
 
   (double, double) getMinMaxRowHeight(DataTableThemeData dataTableTheme) {
     final double effectiveDataRowMinHeight = dataRowHeight ?? dataTableTheme.dataRowMinHeight ?? kMinInteractiveDimension;
@@ -717,7 +728,6 @@ class DataTable2 extends DataTable {
 
             // size data columns
             final widths = _calculateDataColumnSizes(constraints, checkBoxWidth, effectiveHorizontalMargin, cdc);
-
             // File empty cells in created rows with actual widgets
             for (int dataColumnIndex = 0; dataColumnIndex < columns.length; dataColumnIndex++) {
               final DataColumn column = columns[dataColumnIndex];
@@ -919,7 +929,13 @@ class DataTable2 extends DataTable {
 
               Widget addBottomMargin(Table t) =>
                   bottomMargin != null && bottomMargin! > 0 ? Column(mainAxisSize: MainAxisSize.min, children: [t, SizedBox(height: bottomMargin!)]) : t;
-
+              var finalMainTableWidget = addBottomMargin(coreTable);
+              if (stackedWidgets != null) {
+                finalMainTableWidget = Stack(children: [
+                  finalMainTableWidget,
+                  ...stackedWidgets!(StateInfo(actualColumnWidths: widths)),
+                ]);
+              }
               var scrollBarTheme = Theme.of(context).scrollbarTheme;
               // flutter/lib/src/material/scrollbar.dart, scrollbar decides whther to create  Cupertino or Material scrollbar, Cupertino ignores themes
               var isiOS = Theme.of(context).platform == TargetPlatform.iOS;
@@ -952,7 +968,7 @@ class DataTable2 extends DataTable {
                                 controller: coreVerticalController,
                                 scrollDirection: Axis.vertical,
                                 child: SingleChildScrollView(
-                                    controller: coreHorizontalController, scrollDirection: Axis.horizontal, child: addBottomMargin(coreTable)))))
+                                    controller: coreHorizontalController, scrollDirection: Axis.horizontal, child: finalMainTableWidget))))
                   ]));
 
               fixedColumnAndCornerCol = fixedTopLeftCornerTable == null && fixedColumnsTable == null
