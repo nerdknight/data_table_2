@@ -728,6 +728,7 @@ class DataTable2 extends DataTable {
 
             // size data columns
             final widths = _calculateDataColumnSizes(constraints, checkBoxWidth, effectiveHorizontalMargin, cdc);
+
             // File empty cells in created rows with actual widgets
             for (int dataColumnIndex = 0; dataColumnIndex < columns.length; dataColumnIndex++) {
               final DataColumn column = columns[dataColumnIndex];
@@ -929,6 +930,7 @@ class DataTable2 extends DataTable {
 
               Widget addBottomMargin(Table t) =>
                   bottomMargin != null && bottomMargin! > 0 ? Column(mainAxisSize: MainAxisSize.min, children: [t, SizedBox(height: bottomMargin!)]) : t;
+
               var finalMainTableWidget = addBottomMargin(coreTable);
               if (stackedWidgets != null) {
                 finalMainTableWidget = Stack(children: [
@@ -936,6 +938,7 @@ class DataTable2 extends DataTable {
                   ...stackedWidgets!(StateInfo(actualColumnWidths: widths)),
                 ]);
               }
+
               var scrollBarTheme = Theme.of(context).scrollbarTheme;
               // flutter/lib/src/material/scrollbar.dart, scrollbar decides whther to create  Cupertino or Material scrollbar, Cupertino ignores themes
               var isiOS = Theme.of(context).platform == TargetPlatform.iOS;

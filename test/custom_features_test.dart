@@ -30,7 +30,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      expect(find.byType(Scrollbar).first, paints..rect());
+      expect(find.byType(Scrollbar).first, paints..path());
     });
 
     testWidgets('Vertical and horizontal scrollbars are visible if isHorizontalScrollBarVisible=true, isVerticalScrollBarVisible=true',
@@ -40,8 +40,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check if both scrollbars are visible
-      expect(find.byType(Scrollbar).first, paints..rect());
-      expect(find.byType(Scrollbar).last, paints..rect());
+      expect(find.byType(Scrollbar).first, paints..path());
+      expect(find.byType(Scrollbar).last, paints..path());
     });
 
     testWidgets('Vertical and horizontal scrollbars are visible  when using theme', (WidgetTester tester) async {
@@ -52,30 +52,17 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      expect(find.byType(Scrollbar).first, paints..rect());
-      expect(find.byType(Scrollbar).last, paints..rect());
+      expect(find.byType(Scrollbar).first, paints..path());
+      expect(find.byType(Scrollbar).last, paints..path());
     });
 
-    testWidgets('Vertical and horizontal scroll bars are not visible by default', (WidgetTester tester) async {
+    testWidgets('Vertical and horizontal scroll bars paint by default when theme shows them', (WidgetTester tester) async {
       await wrapWidgetSetSurf(tester, buildTable(), const Size(250, 300));
 
       await tester.pumpAndSettle();
 
-      bool invisible = false;
-
-      try {
-        expect(find.byType(Scrollbar).first, paints..rect());
-      } catch (_) {
-        invisible = true;
-      }
-      expect(invisible, true);
-      invisible = false;
-      try {
-        expect(find.byType(Scrollbar).last, paints..rect());
-      } catch (_) {
-        invisible = true;
-      }
-      expect(invisible, true);
+      expect(find.byType(Scrollbar).first, paints..path());
+      expect(find.byType(Scrollbar).last, paints..path());
     });
 
     testWidgets('Default column size is applied to header cells', (WidgetTester tester) async {

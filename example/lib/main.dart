@@ -1,5 +1,5 @@
 import 'package:example/screens/data_table2_fixed_nm.dart';
-import 'package:example/screens/data_table2_resizeable.dart';
+import 'package:example/screens/data_table2_resizable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -67,7 +67,7 @@ Scaffold _getScaffold(BuildContext context, Widget body, [List<String>? options]
                 ),
                 DropdownMenuItem(
                   value: '/datatable2resize',
-                  child: Text('Resizeable Columns'),
+                  child: Text('Resizable Columns'),
                 ),
                 DropdownMenuItem(
                   value: '/paginated2',
@@ -150,7 +150,7 @@ class MyApp extends StatelessWidget {
         '/datatable': (context) => _getScaffold(context, const DataTableDemo()),
         '/paginated': (context) => _getScaffold(context, const PaginatedDataTableDemo()),
         '/datatable2tests': (context) => _getScaffold(context, const DataTable2Tests()),
-        '/datatable2resize': (context) => _getScaffold(context, const ResizeableDataTable2Demo(), getOptionsForRoute('/datatable2resize')),
+        '/datatable2resize': (context) => _getScaffold(context, const ResizableDataTable2Demo(), getOptionsForRoute('/datatable2resize')),
       },
       localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
       supportedLocales: const [

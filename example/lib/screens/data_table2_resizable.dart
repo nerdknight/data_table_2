@@ -11,14 +11,14 @@ import '../nav_helper.dart';
 // The file was extracted from GitHub: https://github.com/flutter/gallery
 // Changes and modifications by Maxim Saplin, 2021
 
-class ResizeableDataTable2Demo extends StatefulWidget {
-  const ResizeableDataTable2Demo({super.key});
+class ResizableDataTable2Demo extends StatefulWidget {
+  const ResizableDataTable2Demo({super.key});
 
   @override
-  ResizeableDataTable2DemoState createState() => ResizeableDataTable2DemoState();
+  ResizableDataTable2DemoState createState() => ResizableDataTable2DemoState();
 }
 
-class ResizeableDataTable2DemoState extends State<ResizeableDataTable2Demo> {
+class ResizableDataTable2DemoState extends State<ResizableDataTable2Demo> {
   bool _sortAscending = true;
   int? _sortColumnIndex;
   late DessertDataSource _dessertsDataSource;
