@@ -1,4 +1,4 @@
-import 'package:data_table_2/data_table_2_plus.dart';
+import 'package:data_table_2_plus/data_table_2_plus.dart';
 import 'package:flutter/material.dart';
 
 import '../data_sources.dart';

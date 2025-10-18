@@ -18,7 +18,7 @@ import 'screens/paginated_data_table2.dart';
 void main() {
   runApp(MyApp());
   // Add import
-  // import 'package:data_table_2/data_table_2_plus.dart';
+  // import 'package:data_table_2_plus/data_table_2_plus.dart';
   // and uncomment below line to remove widgets' logs
   //dataTableShowLogs = false;
 }

@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print, prefer_interpolation_to_compose_strings, avoid_renaming_method_parameters
 
-import 'package:data_table_2/data_table_2_plus.dart';
+import 'package:data_table_2_plus/data_table_2_plus.dart';
 import 'package:flutter/material.dart';
 
 int _idCounter = 0;

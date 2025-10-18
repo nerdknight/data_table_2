@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:data_table_2/data_table_2_plus.dart';
+import 'package:data_table_2_plus/data_table_2_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

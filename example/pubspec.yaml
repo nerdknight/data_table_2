@@ -15,7 +15,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter 
   intl: ^0.20.2
-  data_table_2:
+  data_table_2_plus:
     path: ../
     #git: https://github.com/maxim-saplin/data_table_2
 
