@@ -814,6 +814,7 @@ class PaginatedDataTable2State extends State<PaginatedDataTable2> {
           border: widget.border,
           smRatio: widget.smRatio,
           lmRatio: widget.lmRatio,
+          columnResizingParameters: widget.columnResizingParameters,
           isHorizontalScrollBarVisible: widget.isHorizontalScrollBarVisible,
           isVerticalScrollBarVisible: widget.isVerticalScrollBarVisible,
         ),
